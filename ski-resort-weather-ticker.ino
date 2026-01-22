@@ -16,19 +16,20 @@
 
 // keystone
 // latitude = 39.59014;
-// longitude = -105.94614
+// longitude = -105.94614;
+// String serverName = "https://api.open-meteo.com/v1/forecast?latitude=39.59014&longitude=-105.94614&daily=snowfall_sum&timezone=America%2FDenver&past_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch";
 
 // breckenridge
-// latitude = 
-// longitude = 
+// latitude = 39.47356;
+// longitude = -106.07825;
 
 // ski cooper
-// latitude = 
-// longitude = 
+// latitude = 39.35553;
+// longitude = -106.28522;
 
-// el dora
-// latitude = 
-// longitude = 
+// eldora
+// latitude = 39.93842;
+// longitude = -105.59283;
 
 
 const char WIFI_SSID[] = "SpectrumSetup-512A";
@@ -43,7 +44,10 @@ const char WIFI_PASSWORD[] = "fairsignal60";
 // String queryString = "temperature=26&humidity=70";
 
 // 
-
+String SCHEME_AND_DOMAIN_NAME = "https://api.open-meteo.com";
+String PATH_NAME = "/v1/forecast";
+String queryString = "?latitude=39.61425&longitude=-106.365917";
+String PARAMETERS = "&daily=snowfall_sum&timezone=America%2FDenver&past_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch";
 String serverName = "https://api.open-meteo.com/v1/forecast?latitude=39.61425&longitude=-106.365917&daily=snowfall_sum&timezone=America%2FDenver&past_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch";
 
 String jsonBuffer;
