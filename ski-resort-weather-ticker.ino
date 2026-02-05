@@ -31,9 +31,11 @@
 // latitude = 39.93842;
 // longitude = -105.59283;
 
+const char WIFI_SSID[] = "SETUP-D9CC";
+const char WIFI_PASSWORD[] = "aisle5961corral";
 
-const char WIFI_SSID[] = "SpectrumSetup-512A";
-const char WIFI_PASSWORD[] = "fairsignal60";
+// const char WIFI_SSID[] = "SpectrumSetup-512A";
+// const char WIFI_PASSWORD[] = "fairsignal60";
 
 // const char WIFI_SSID[] = "SETUP-D025-2.4ghz";
 // const char WIFI_PASSWORD[] = "charge6626drain";
@@ -57,7 +59,7 @@ struct skiResort {
   String latitude;
   String longitude;
   String snowDay0;
-  int snowAccum[];
+  String snowAccum[14] = {};
 };
 
 void setup() {
@@ -122,13 +124,18 @@ void setup() {
         JSON.stringify(skiResortJsonObj["latitude"]),
         JSON.stringify(skiResortJsonObj["longitude"]),
         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][0]),
-        // JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"]),
+        JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][0]),
+        JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][1]),
+        JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][13])
       };
       Serial.println(vail.name);
       Serial.println(vail.latitude);
       Serial.println(vail.longitude);
       Serial.println(vail.snowDay0);
-      // Serial.println(vail.snowAccum);
+      Serial.println(vail.snowAccum[0]);
+      Serial.println(vail.snowAccum[1]);
+      Serial.println(vail.snowAccum[2]);
+      Serial.println(vail.snowAccum[13]);
       // Serial.println(vail.l)
 
       // struct skiResort {
