@@ -123,10 +123,19 @@ void setup() {
       skiResort tokyoMegaplex = {"tokyo megaplex", "123.45", "67.890", "lots of snow"};
       // Serial.println(tokyoMegaplex.name);
       skiResort vail = {
+        // String name;
         JSON.stringify(skiResortJsonObj["resort"]),
+
+        // String latitude;
         JSON.stringify(skiResortJsonObj["latitude"]),
+
+        // String longitude;
         JSON.stringify(skiResortJsonObj["longitude"]),
+
+        // String snowToday;
         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][7]),
+
+        // String snowAccum[14] = {};
         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][0]),
         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][1]),
         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][2]),
@@ -150,20 +159,37 @@ void setup() {
       Serial.println(vail.snowToday);
 
 
-int j = 0;
+float pastWeekSnowAccum = 0;
+float nextWeekSnowAccumForecast = 0;
 
-for (int i = -6; i < 8; i++) {
-
+for (int i = -6, j = 0; i < 8; i++, j++) {
 
   Serial.print("Snow accumulation ");
   if (i < 0) {
     Serial.print(i * -1);
     Serial.print(" day(s) ago: ");
+
+    // Serial.println(" ");
+    // Serial.println("***");
+    // Serial.print("raw snow accum: ");
+    // Serial.println(vail.snowAccum[j]);
+    // Serial.println(vail.snowAccum[j].toFloat());
+    pastWeekSnowAccum += vail.snowAccum[j].toFloat();
+    // Serial.print("pastWeekSnowAccum: ");
+    // Serial.println(pastWeekSnowAccum);
   } else if (i == 0) {
+
     Serial.print("today: ");
+
+    // pastWeekSnowAccum += vail.snowAccum[j].toFloat();
+    // Serial.print("pastWeekSnowAccum: ");
+    // Serial.println(pastWeekSnowAccum);
   } else {
+
     Serial.print(i);
-    Serial.print(" days in the future: ");
+    Serial.print(" day(s) in the future: ");
+
+    nextWeekSnowAccumForecast += vail.snowAccum[j].toFloat();
   };
 
   Serial.print(vail.snowAccum[j]);
@@ -172,9 +198,17 @@ for (int i = -6; i < 8; i++) {
   // Serial.print("j: ");
   // Serial.println(j);
   // Serial.println(vail.snowAccum[6]);
-
-  j++;
 };
+
+Serial.println("***");
+Serial.print("pastWeekSnowAccum: ");
+Serial.print(pastWeekSnowAccum);
+Serial.println(" inches");
+
+Serial.print("nextWeekSnowAccumForecast: ");
+Serial.print(nextWeekSnowAccumForecast);
+Serial.println(" inches");
+Serial.println("***");
 
 // Serial.println("Last week");
 // Serial.print("snowAccum[0]: ");
