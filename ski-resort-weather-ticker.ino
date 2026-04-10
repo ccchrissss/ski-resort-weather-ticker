@@ -10,26 +10,55 @@
 #include <HTTPClient.h>
 #include <Arduino_JSON.h>
 
-// vail
-// latitude = 39.61;
-// longitude = -106.37;
+struct skiResortBasicInfo {
+  String name;
+  String latitude;
+  String longitude;
+  String serverName;
+};
 
-// keystone
-// latitude = 39.59;
-// longitude = -105.95;
-// String serverName = "https://api.open-meteo.com/v1/forecast?latitude=39.59014&longitude=-105.94614&daily=snowfall_sum&timezone=America%2FDenver&past_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch";
+skiResortBasicInfo vailBasicInfo = {
+  "vail",
+  "39.61",
+  "-106.37",
+  "https://api.open-meteo.com/v1/forecast?latitude=39.61&longitude=-106.37&daily=snowfall_sum&timezone=America%2FDenver&past_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch",
+};
 
-// breckenridge
-// latitude = 39.47;
-// longitude = -106.08;
+skiResortBasicInfo keystoneBasicInfo = {
+  "keystone",
+  "39.59",
+  "-105.95",
+  "https://api.open-meteo.com/v1/forecast?latitude=39.59014&longitude=-105.94614&daily=snowfall_sum&timezone=America%2FDenver&past_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch",
+};
 
-// ski cooper
-// latitude = 39.36;
-// longitude = -106.29;
+skiResortBasicInfo breckenridgeBasicInfo = {
+  "breckenridge",
+  "39.47",
+  "-106.08",
+  "https://api.open-meteo.com/v1/forecast?latitude=39.47&longitude=-106.08&daily=snowfall_sum&timezone=America%2FDenver&past_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch",
+};
 
-// eldora
-// latitude = 39.94;
-// longitude = -105.59;
+skiResortBasicInfo skiCooperBasicInfo = {
+  "ski cooper",
+  "39.36",
+  "-106.29",
+  "https://api.open-meteo.com/v1/forecast?latitude=39.36&longitude=-106.29&daily=snowfall_sum&timezone=America%2FDenver&past_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch",
+};
+
+skiResortBasicInfo eldoraBasicInfo = {
+  "eldora",
+  "39.94",
+  "-105.59",
+  "https://api.open-meteo.com/v1/forecast?latitude=39.94&longitude=-105.59&daily=snowfall_sum&timezone=America%2FDenver&past_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch",
+};
+
+skiResortBasicInfo resortsBasicInfoArr[] = {
+  vailBasicInfo,
+  keystoneBasicInfo,
+  breckenridgeBasicInfo,
+  skiCooperBasicInfo,
+  eldoraBasicInfo,
+};
 
 const char WIFI_SSID[] = "SETUP-D9CC";
 const char WIFI_PASSWORD[] = "aisle5961corral";
@@ -75,6 +104,19 @@ void setup() {
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
+
+  Serial.println(vailBasicInfo.name);
+  Serial.println(vailBasicInfo.latitude);
+  Serial.println(vailBasicInfo.longitude);
+  
+  Serial.println(keystoneBasicInfo.name);
+  Serial.println(keystoneBasicInfo.latitude);
+  Serial.println(keystoneBasicInfo.longitude);
+
+  Serial.println(resortsBasicInfoArr[3].name);
+
+
+
 
   HTTPClient http;
 
