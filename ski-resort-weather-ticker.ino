@@ -80,11 +80,11 @@ struct skiResortWithFetchedData {
 // this calculates the length of the array
 int resortsBasicInfoArrCount = sizeof(resortsBasicInfoArr) / sizeof(resortsBasicInfoArr[0]);
 
-// const char WIFI_SSID[] = "SETUP-D9CC";
-// const char WIFI_PASSWORD[] = "aisle5961corral";
+const char WIFI_SSID[] = "SETUP-D9CC";
+const char WIFI_PASSWORD[] = "aisle5961corral";
 
-const char WIFI_SSID[] = "SpectrumSetup-512A";
-const char WIFI_PASSWORD[] = "fairsignal60";
+// const char WIFI_SSID[] = "SpectrumSetup-512A";
+// const char WIFI_PASSWORD[] = "fairsignal60";
 
 // const char WIFI_SSID[] = "SETUP-D025-2.4ghz";
 // const char WIFI_PASSWORD[] = "charge6626drain";
@@ -108,225 +108,159 @@ void fetchSnowReport(skiResortBasicInfo resort) {
   Serial.println("fetchSnowReport resort: ");
   Serial.println(resort.name);
 
-  // HTTPClient http;
+  HTTPClient http;
 
-  //   http.begin(resort.serverName);
-  //   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-  //   int httpCode = http.GET();
+    http.begin(resort.serverName);
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    int httpCode = http.GET();
 
-  //   // httpCode will be negative on error
-  //   if (httpCode > 0) {
-  //     // file found at server
-  //     if (httpCode == HTTP_CODE_OK) {
-  //       String payload = http.getString();
+    // httpCode will be negative on error
+    if (httpCode > 0) {
+      // file found at server
+      if (httpCode == HTTP_CODE_OK) {
+        String payload = http.getString();
 
-  //       Serial.print("payload: ");
-  //       Serial.println(payload);
-  //       Serial.printf("httpCode: ");
-  //       Serial.println(httpCode);
+        // Serial.print("payload: ");
+        // Serial.println(payload);
+        Serial.printf("httpCode: ");
+        Serial.println(httpCode);
 
-  //       jsonBuffer = payload;
-  //       Serial.print("jsonBuffer: ");
-  //       Serial.println(jsonBuffer);
-  //       JSONVar skiResortJsonObj = JSON.parse(jsonBuffer);
+        jsonBuffer = payload;
+        // Serial.print("jsonBuffer: ");
+        // Serial.println(jsonBuffer);
+        JSONVar skiResortJsonObj = JSON.parse(jsonBuffer);
 
-  //       Serial.print("skiResortJsonObj = ");
-  //       Serial.println(skiResortJsonObj);
+        Serial.print("skiResortJsonObj = ");
+        Serial.println(skiResortJsonObj);
 
-  //       // Serial.println(myObject["latitude"]);
-  //       // Serial.println(skiResortJsonObj);
-  //       skiResortJsonObj["resort"] = "vail";
-  //       Serial.println(skiResortJsonObj);
+        // Serial.println(myObject["latitude"]);
+        // Serial.println(skiResortJsonObj);
+        skiResortJsonObj["resort"] = resort.name;
+        // Serial.println(skiResortJsonObj);
 
-  //       // Serial.println("...");
+        // Serial.println("...");
 
-  //       Serial.print("resort: ");
-  //       Serial.println(skiResortJsonObj["resort"]);
-  //       // Serial.println("snow accum one week ago: ");
-  //       // Serial.print("date: ");
-  //       // Serial.println(skiResortJsonObj["daily"]["time"][0]);
-  //       // Serial.print("amount: ");
-  //       // Serial.print(skiResortJsonObj["daily"]["snowfall_sum"][0]);
-  //       // Serial.println(" inches");
+        // Serial.print("resort: ");
+        // Serial.println(skiResortJsonObj["resort"]);
+
+        // Serial.println("snow accum one week ago: ");
+        // Serial.print("date: ");
+        // Serial.println(skiResortJsonObj["daily"]["time"][0]);
+        // Serial.print("amount: ");
+        // Serial.print(skiResortJsonObj["daily"]["snowfall_sum"][0]);
+        // Serial.println(" inches");
         
-  //       Serial.println(">>");
+        Serial.println(">>");
 
-  //       String testSkiResortName = JSON.stringify(skiResortJsonObj["resort"]);
-  //       // Serial.println(testSkiResortName);
+        String testSkiResortName = JSON.stringify(skiResortJsonObj["resort"]);
+        // Serial.println(testSkiResortName);
         
-  //       // skiResortWithFetchedData tokyoMegaplex = {"tokyo megaplex", "123.45", "67.890", "lots of snow"};
-  //       // Serial.println(tokyoMegaplex.name);
-  //       skiResortWithFetchedData fetchedDataSnowReport = {
-  //         // String name;
-  //         JSON.stringify(skiResortJsonObj["resort"]),
+        // skiResortWithFetchedData tokyoMegaplex = {"tokyo megaplex", "123.45", "67.890", "lots of snow"};
+        // Serial.println(tokyoMegaplex.name);
+        skiResortWithFetchedData fetchedDataSnowReport = {
+          // String name;
+          JSON.stringify(skiResortJsonObj["resort"]),
 
-  //         // String latitude;
-  //         JSON.stringify(skiResortJsonObj["latitude"]),
+          // String latitude;
+          JSON.stringify(skiResortJsonObj["latitude"]),
 
-  //         // String longitude;
-  //         JSON.stringify(skiResortJsonObj["longitude"]),
+          // String longitude;
+          JSON.stringify(skiResortJsonObj["longitude"]),
 
-  //         // String snowToday;
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][7]),
+          // String snowToday;
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][6]),
 
-  //         // String snowAccum[14] = {};
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][0]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][1]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][2]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][3]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][4]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][5]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][6]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][7]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][8]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][9]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][10]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][11]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][12]),
-  //         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][13]),
+          // String snowAccum[14] = {};
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][0]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][1]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][2]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][3]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][4]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][5]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][6]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][7]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][8]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][9]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][10]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][11]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][12]),
+          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][13]),
 
-  //       };
-  //       Serial.println(fetchedDataSnowReport.name);
-  //       Serial.println(fetchedDataSnowReport.latitude);
-  //       Serial.println(fetchedDataSnowReport.longitude);
-  //       Serial.print("snowToday: ");
-  //       Serial.println(fetchedDataSnowReport.snowToday);
+        };
+        Serial.println(fetchedDataSnowReport.name);
+        Serial.println(fetchedDataSnowReport.latitude);
+        Serial.println(fetchedDataSnowReport.longitude);
+        Serial.print("snowToday: ");
+        Serial.print(fetchedDataSnowReport.snowToday);
+        Serial.println(" inches");
 
 
-  // float pastWeekSnowAccum = 0;
-  // float nextWeekSnowAccumForecast = 0;
+  float pastWeekSnowAccum = 0;
+  float nextWeekSnowAccumForecast = 0;
 
-  // for (int i = -6, j = 0; i < 8; i++, j++) {
+  for (int i = -6, j = 0; i < 8; i++, j++) {
 
-  //   Serial.print("Snow accumulation ");
-  //   if (i < 0) {
-  //     Serial.print(i * -1);
-  //     Serial.print(" day(s) ago: ");
+    Serial.print("Snow accumulation ");
+    if (i < 0) {
+      Serial.print(i * -1);
+      Serial.print(" day(s) ago: ");
 
-  //     // Serial.println(" ");
-  //     // Serial.println("***");
-  //     // Serial.print("raw snow accum: ");
-  //     // Serial.println(fetchedDataSnowReport.snowAccum[j]);
-  //     // Serial.println(fetchedDataSnowReport.snowAccum[j].toFloat());
-  //     pastWeekSnowAccum += fetchedDataSnowReport.snowAccum[j].toFloat();
-  //     // Serial.print("pastWeekSnowAccum: ");
-  //     // Serial.println(pastWeekSnowAccum);
-  //   } else if (i == 0) {
+      // Serial.println(" ");
+      // Serial.println("***");
+      // Serial.print("raw snow accum: ");
+      // Serial.println(fetchedDataSnowReport.snowAccum[j]);
+      // Serial.println(fetchedDataSnowReport.snowAccum[j].toFloat());
+      pastWeekSnowAccum += fetchedDataSnowReport.snowAccum[j].toFloat();
+      // Serial.print("pastWeekSnowAccum: ");
+      // Serial.println(pastWeekSnowAccum);
+    } else if (i == 0) {
 
-  //     Serial.print("today: ");
+      Serial.print("today: ");
 
-  //     // pastWeekSnowAccum += fetchedDataSnowReport.snowAccum[j].toFloat();
-  //     // Serial.print("pastWeekSnowAccum: ");
-  //     // Serial.println(pastWeekSnowAccum);
-  //   } else {
+      pastWeekSnowAccum += fetchedDataSnowReport.snowAccum[j].toFloat();
+      // Serial.print("pastWeekSnowAccum: ");
+      // Serial.println(pastWeekSnowAccum);
+    } else {
 
-  //     Serial.print(i);
-  //     Serial.print(" day(s) in the future: ");
+      Serial.print(i);
+      Serial.print(" day(s) in the future: ");
 
-  //     nextWeekSnowAccumForecast += fetchedDataSnowReport.snowAccum[j].toFloat();
-  //   };
+      nextWeekSnowAccumForecast += fetchedDataSnowReport.snowAccum[j].toFloat();
+    };
 
-  //   Serial.print(fetchedDataSnowReport.snowAccum[j]);
-  //   Serial.println(" inches");
+    Serial.print(fetchedDataSnowReport.snowAccum[j]);
+    Serial.println(" inches");
 
-  //   // Serial.print("j: ");
-  //   // Serial.println(j);
-  //   // Serial.println(fetchedDataSnowReport.snowAccum[6]);
-  // };
+    // Serial.print("j: ");
+    // Serial.println(j);
+    // Serial.println(fetchedDataSnowReport.snowAccum[6]);
+  };
 
-  // Serial.println("***");
-  // Serial.print("pastWeekSnowAccum: ");
-  // Serial.print(pastWeekSnowAccum);
+  Serial.println("***");
+  Serial.print("pastWeekSnowAccum: ");
+  Serial.print(pastWeekSnowAccum);
+  Serial.println(" inches");
+
+  Serial.print("nextWeekSnowAccumForecast: ");
+  Serial.print(nextWeekSnowAccumForecast);
+  Serial.println(" inches");
+  Serial.println("***");
+
+  // Serial.println("A week ago");
+  // Serial.print("snowAccum[0]: ");
+  // Serial.print(fetchedDataSnowReport.snowAccum[0]);
   // Serial.println(" inches");
 
-  // Serial.print("nextWeekSnowAccumForecast: ");
-  // Serial.print(nextWeekSnowAccumForecast);
-  // Serial.println(" inches");
-  // Serial.println("***");
 
-  // // Serial.println("Last week");
-  // // Serial.print("snowAccum[0]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[0]);
-  // // Serial.println(" inches");
+  } else {
+    // HTTP header has been send and Server response header has been handled
+    Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+  }
+  } else {
+    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+  }
 
-  // // Serial.print("snowAccum[1]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[1]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[2]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[2]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[3]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[3]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[4]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[4]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[5]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[5]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[6]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[6]);
-  // // Serial.println(" inches");
-
-  // // Serial.println("Today");
-
-  // // Serial.print("snowAccum[7]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[7]);
-  // // Serial.println(" inches");
-
-  // // Serial.println("Next week");
-
-  // // Serial.print("snowAccum[8]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[8]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[9]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[9]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[10]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[10]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[11]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[11]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[12]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[12]);
-  // // Serial.println(" inches");
-
-  // // Serial.print("snowAccum[13]: ");
-  // // Serial.print(fetchedDataSnowReport.snowAccum[13]);
-  // // Serial.println(" inches");
-
-
-
-  //       // Serial.println(fetchedDataSnowReport.l)
-
-  //       // struct skiResort {
-  //       //   String name;
-  //       //   String latitude;
-  //       //   String longitude;
-  //       //   String snowAccumulation;
-  //       // };
-
-
-  //     } else {
-  //       // HTTP header has been send and Server response header has been handled
-  //       Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-  //     }
-  //   } else {
-  //     Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-  //   }
-
-  //   http.end();
-  // }
+  http.end();
 };
 
 
@@ -354,236 +288,15 @@ void setup() {
   };
   Serial.println("");
 
-  // fetchSnowReport("a basin");
-
-  // resortsBasicInfoArrCount
-
   for (int i = 0; i < resortsBasicInfoArrCount; i++) {
 
     fetchSnowReport(resortsBasicInfoArr[i]);
   };
 
-
-//   HTTPClient http;
-
-//   http.begin(serverName);
-//   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-//   int httpCode = http.GET();
-
-//   // httpCode will be negative on error
-//   if (httpCode > 0) {
-//     // file found at server
-//     if (httpCode == HTTP_CODE_OK) {
-//       String payload = http.getString();
-
-//       Serial.print("payload: ");
-//       Serial.println(payload);
-//       Serial.printf("httpCode: ");
-//       Serial.println(httpCode);
-
-//       jsonBuffer = payload;
-//       Serial.print("jsonBuffer: ");
-//       Serial.println(jsonBuffer);
-//       JSONVar skiResortJsonObj = JSON.parse(jsonBuffer);
-
-//       Serial.print("skiResortJsonObj = ");
-//       Serial.println(skiResortJsonObj);
-
-//       // Serial.println(myObject["latitude"]);
-//       // Serial.println(skiResortJsonObj);
-//       skiResortJsonObj["resort"] = "vail";
-//       Serial.println(skiResortJsonObj);
-
-//       // Serial.println("...");
-
-//       Serial.print("resort: ");
-//       Serial.println(skiResortJsonObj["resort"]);
-//       // Serial.println("snow accum one week ago: ");
-//       // Serial.print("date: ");
-//       // Serial.println(skiResortJsonObj["daily"]["time"][0]);
-//       // Serial.print("amount: ");
-//       // Serial.print(skiResortJsonObj["daily"]["snowfall_sum"][0]);
-//       // Serial.println(" inches");
-      
-//       Serial.println(">>");
-
-//       String testSkiResortName = JSON.stringify(skiResortJsonObj["resort"]);
-//       // Serial.println(testSkiResortName);
-      
-//       skiResortWithFetchedData tokyoMegaplex = {"tokyo megaplex", "123.45", "67.890", "lots of snow"};
-//       // Serial.println(tokyoMegaplex.name);
-//       skiResortWithFetchedData vail = {
-//         // String name;
-//         JSON.stringify(skiResortJsonObj["resort"]),
-
-//         // String latitude;
-//         JSON.stringify(skiResortJsonObj["latitude"]),
-
-//         // String longitude;
-//         JSON.stringify(skiResortJsonObj["longitude"]),
-
-//         // String snowToday;
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][7]),
-
-//         // String snowAccum[14] = {};
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][0]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][1]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][2]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][3]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][4]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][5]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][6]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][7]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][8]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][9]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][10]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][11]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][12]),
-//         JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][13]),
-
-//       };
-//       Serial.println(vail.name);
-//       Serial.println(vail.latitude);
-//       Serial.println(vail.longitude);
-//       Serial.print("snowToday: ");
-//       Serial.println(vail.snowToday);
-
-
-// float pastWeekSnowAccum = 0;
-// float nextWeekSnowAccumForecast = 0;
-
-// for (int i = -6, j = 0; i < 8; i++, j++) {
-
-//   Serial.print("Snow accumulation ");
-//   if (i < 0) {
-//     Serial.print(i * -1);
-//     Serial.print(" day(s) ago: ");
-
-//     // Serial.println(" ");
-//     // Serial.println("***");
-//     // Serial.print("raw snow accum: ");
-//     // Serial.println(vail.snowAccum[j]);
-//     // Serial.println(vail.snowAccum[j].toFloat());
-//     pastWeekSnowAccum += vail.snowAccum[j].toFloat();
-//     // Serial.print("pastWeekSnowAccum: ");
-//     // Serial.println(pastWeekSnowAccum);
-//   } else if (i == 0) {
-
-//     Serial.print("today: ");
-
-//     // pastWeekSnowAccum += vail.snowAccum[j].toFloat();
-//     // Serial.print("pastWeekSnowAccum: ");
-//     // Serial.println(pastWeekSnowAccum);
-//   } else {
-
-//     Serial.print(i);
-//     Serial.print(" day(s) in the future: ");
-
-//     nextWeekSnowAccumForecast += vail.snowAccum[j].toFloat();
-//   };
-
-//   Serial.print(vail.snowAccum[j]);
-//   Serial.println(" inches");
-
-//   // Serial.print("j: ");
-//   // Serial.println(j);
-//   // Serial.println(vail.snowAccum[6]);
-// };
-
-// Serial.println("***");
-// Serial.print("pastWeekSnowAccum: ");
-// Serial.print(pastWeekSnowAccum);
-// Serial.println(" inches");
-
-// Serial.print("nextWeekSnowAccumForecast: ");
-// Serial.print(nextWeekSnowAccumForecast);
-// Serial.println(" inches");
-// Serial.println("***");
-
-// // Serial.println("Last week");
-// // Serial.print("snowAccum[0]: ");
-// // Serial.print(vail.snowAccum[0]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[1]: ");
-// // Serial.print(vail.snowAccum[1]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[2]: ");
-// // Serial.print(vail.snowAccum[2]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[3]: ");
-// // Serial.print(vail.snowAccum[3]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[4]: ");
-// // Serial.print(vail.snowAccum[4]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[5]: ");
-// // Serial.print(vail.snowAccum[5]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[6]: ");
-// // Serial.print(vail.snowAccum[6]);
-// // Serial.println(" inches");
-
-// // Serial.println("Today");
-
-// // Serial.print("snowAccum[7]: ");
-// // Serial.print(vail.snowAccum[7]);
-// // Serial.println(" inches");
-
-// // Serial.println("Next week");
-
-// // Serial.print("snowAccum[8]: ");
-// // Serial.print(vail.snowAccum[8]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[9]: ");
-// // Serial.print(vail.snowAccum[9]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[10]: ");
-// // Serial.print(vail.snowAccum[10]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[11]: ");
-// // Serial.print(vail.snowAccum[11]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[12]: ");
-// // Serial.print(vail.snowAccum[12]);
-// // Serial.println(" inches");
-
-// // Serial.print("snowAccum[13]: ");
-// // Serial.print(vail.snowAccum[13]);
-// // Serial.println(" inches");
+};
 
 
 
-//       // Serial.println(vail.l)
-
-//       // struct skiResort {
-//       //   String name;
-//       //   String latitude;
-//       //   String longitude;
-//       //   String snowAccumulation;
-//       // };
-
-
-//     } else {
-//       // HTTP header has been send and Server response header has been handled
-//       Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-//     }
-//   } else {
-//     Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-//   }
-
-//   http.end();
-
-}
 
 void loop() {
 }
