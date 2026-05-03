@@ -9,6 +9,9 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <Arduino_JSON.h>
+#include <TFT_eSPI.h>
+
+TFT_eSPI tft = TFT_eSPI();
 
 // **
 // ***** Ski Resorts *****
@@ -268,6 +271,29 @@ void fetchSnowReport(skiResortBasicInfo resort) {
 
 
 void setup() {
+
+  // **
+  // ***** Print to TFT *****
+  // **
+  pinMode(21, OUTPUT);
+  digitalWrite(21, HIGH); // backlight ON
+
+  tft.init();
+  tft.setRotation(1);
+  tft.fillScreen(TFT_BLACK);
+
+  tft.setTextColor(TFT_WHITE);
+  tft.setCursor(20, 120);
+  tft.setTextSize(2);
+
+  // tft.println("HELLO WORLD");
+  tft.println("it's working");
+  tft.println("IIIIITTTTT'S WORKINGGGGG!");
+
+
+  // **
+  // ***** Print To Serial Monitor *****
+  // **
 
   Serial.begin(115200);
 
