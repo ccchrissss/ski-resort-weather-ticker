@@ -8,7 +8,7 @@
 
 #include <WiFi.h>
 #include <HTTPClient.h>
-#include <Arduino_JSON.h>
+#include <ArduinoJson.h>
 #include <TFT_eSPI.h>
 
 TFT_eSPI tft = TFT_eSPI();
@@ -107,9 +107,13 @@ String jsonBuffer;
 
 void fetchSnowReport(skiResortBasicInfo resort) {
 
-  Serial.println("");
-  Serial.println("fetchSnowReport resort: ");
-  Serial.println(resort.name);
+  // Serial.println("");
+  // Serial.println("fetchSnowReport resort: ");
+  // Serial.println(resort.name);
+
+  tft.println("");
+  tft.println("fetchSnowReport resort: ");
+  tft.println(resort.name);
 
   HTTPClient http;
 
@@ -131,15 +135,17 @@ void fetchSnowReport(skiResortBasicInfo resort) {
         jsonBuffer = payload;
         // Serial.print("jsonBuffer: ");
         // Serial.println(jsonBuffer);
-        JSONVar skiResortJsonObj = JSON.parse(jsonBuffer);
+        // JSONVar skiResortJsonObj = JSON.parse(jsonBuffer);
+        
+        JsonDocument skiResortJsonDoc;
+        deserializeJson(skiResortJsonDoc, jsonBuffer);
 
-        Serial.print("skiResortJsonObj = ");
-        Serial.println(skiResortJsonObj);
 
-        // Serial.println(myObject["latitude"]);
-        // Serial.println(skiResortJsonObj);
-        skiResortJsonObj["resort"] = resort.name;
-        // Serial.println(skiResortJsonObj);
+        // Serial.print("skiResortJsonObj = ");
+
+        // skiResortJsonObj["resort"] = resort.name;
+        skiResortJsonDoc["resort"] = resort.name;
+
 
         // Serial.println("...");
 
@@ -155,47 +161,55 @@ void fetchSnowReport(skiResortBasicInfo resort) {
         
         Serial.println(">>");
 
-        String testSkiResortName = JSON.stringify(skiResortJsonObj["resort"]);
+        // String testSkiResortName = JSON.stringify(skiResortJsonObj["resort"]);
         // Serial.println(testSkiResortName);
         
         // skiResortWithFetchedData tokyoMegaplex = {"tokyo megaplex", "123.45", "67.890", "lots of snow"};
         // Serial.println(tokyoMegaplex.name);
         skiResortWithFetchedData fetchedDataSnowReport = {
           // String name;
-          JSON.stringify(skiResortJsonObj["resort"]),
+          // JSON.stringify(skiResortJsonObj["resort"]),
+          skiResortJsonDoc["resort"],
 
           // String latitude;
-          JSON.stringify(skiResortJsonObj["latitude"]),
+          // JSON.stringify(skiResortJsonObj["latitude"]),
+          skiResortJsonDoc["latitude"],
 
           // String longitude;
-          JSON.stringify(skiResortJsonObj["longitude"]),
+          skiResortJsonDoc["longitude"],
 
           // String snowToday;
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][6]),
+          skiResortJsonDoc["daily"]["snowfall_sum"][6],
 
           // String snowAccum[14] = {};
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][0]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][1]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][2]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][3]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][4]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][5]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][6]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][7]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][8]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][9]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][10]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][11]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][12]),
-          JSON.stringify(skiResortJsonObj["daily"]["snowfall_sum"][13]),
+          skiResortJsonDoc["daily"]["snowfall_sum"][0],
+          skiResortJsonDoc["daily"]["snowfall_sum"][1],
+          skiResortJsonDoc["daily"]["snowfall_sum"][2],
+          skiResortJsonDoc["daily"]["snowfall_sum"][3],
+          skiResortJsonDoc["daily"]["snowfall_sum"][4],
+          skiResortJsonDoc["daily"]["snowfall_sum"][5],
+          skiResortJsonDoc["daily"]["snowfall_sum"][6],
+          skiResortJsonDoc["daily"]["snowfall_sum"][7],
+          skiResortJsonDoc["daily"]["snowfall_sum"][8],
+          skiResortJsonDoc["daily"]["snowfall_sum"][9],
+          skiResortJsonDoc["daily"]["snowfall_sum"][10],
+          skiResortJsonDoc["daily"]["snowfall_sum"][11],
+          skiResortJsonDoc["daily"]["snowfall_sum"][12],
+          skiResortJsonDoc["daily"]["snowfall_sum"][13],
 
         };
-        Serial.println(fetchedDataSnowReport.name);
-        Serial.println(fetchedDataSnowReport.latitude);
-        Serial.println(fetchedDataSnowReport.longitude);
-        Serial.print("snowToday: ");
-        Serial.print(fetchedDataSnowReport.snowToday);
-        Serial.println(" inches");
+        // Serial.println(fetchedDataSnowReport.name);
+        // Serial.println(fetchedDataSnowReport.latitude);
+        // Serial.println(fetchedDataSnowReport.longitude);
+        // Serial.print("snowToday: ");
+        // Serial.print(fetchedDataSnowReport.snowToday);
+        // Serial.println(" inches");
+        tft.println(fetchedDataSnowReport.name);
+        tft.println(fetchedDataSnowReport.latitude);
+        tft.println(fetchedDataSnowReport.longitude);
+        tft.print("snowToday: ");
+        tft.print(fetchedDataSnowReport.snowToday);
+        tft.println(" inches");
 
 
   float pastWeekSnowAccum = 0;
@@ -239,20 +253,24 @@ void fetchSnowReport(skiResortBasicInfo resort) {
     // Serial.println(fetchedDataSnowReport.snowAccum[6]);
   };
 
-  Serial.println("***");
-  Serial.print("pastWeekSnowAccum: ");
-  Serial.print(pastWeekSnowAccum);
-  Serial.println(" inches");
-
-  Serial.print("nextWeekSnowAccumForecast: ");
-  Serial.print(nextWeekSnowAccumForecast);
-  Serial.println(" inches");
-  Serial.println("***");
-
-  // Serial.println("A week ago");
-  // Serial.print("snowAccum[0]: ");
-  // Serial.print(fetchedDataSnowReport.snowAccum[0]);
+  // Serial.println("***");
+  // Serial.print("pastWeekSnowAccum: ");
+  // Serial.print(pastWeekSnowAccum);
   // Serial.println(" inches");
+  tft.println("***");
+  tft.print("pastWeekSnowAccum: ");
+  tft.print(pastWeekSnowAccum);
+  tft.println(" inches");
+
+  // Serial.print("nextWeekSnowAccumForecast: ");
+  // Serial.print(nextWeekSnowAccumForecast);
+  // Serial.println(" inches");
+  // Serial.println("***");
+
+  // // Serial.println("A week ago");
+  // // Serial.print("snowAccum[0]: ");
+  // // Serial.print(fetchedDataSnowReport.snowAccum[0]);
+  // // Serial.println(" inches");
 
 
   } else {
@@ -283,18 +301,12 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
 
   tft.setTextColor(TFT_WHITE);
-  tft.setCursor(20, 120);
+  tft.setCursor(0, 0);
   tft.setTextSize(2);
-
-  // tft.println("HELLO WORLD");
-  tft.println("it's working");
-  tft.println("IIIIITTTTT'S WORKINGGGGG!");
-
 
   // **
   // ***** Print To Serial Monitor *****
   // **
-
   Serial.begin(115200);
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -314,10 +326,12 @@ void setup() {
   };
   Serial.println("");
 
-  for (int i = 0; i < resortsBasicInfoArrCount; i++) {
+  fetchSnowReport(vailBasicInfo);
 
-    fetchSnowReport(resortsBasicInfoArr[i]);
-  };
+  // for (int i = 0; i < resortsBasicInfoArrCount; i++) {
+
+  //   fetchSnowReport(resortsBasicInfoArr[i]);
+  // };
 
 };
 
