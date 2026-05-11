@@ -111,9 +111,9 @@ void fetchSnowReport(skiResortBasicInfo resort) {
   // Serial.println("fetchSnowReport resort: ");
   // Serial.println(resort.name);
 
-  tft.println("");
-  tft.println("fetchSnowReport resort: ");
-  tft.println(resort.name);
+  // tft.println("");
+  // tft.println("fetchSnowReport resort: ");
+  // tft.println(resort.name);
 
   HTTPClient http;
 
@@ -205,11 +205,14 @@ void fetchSnowReport(skiResortBasicInfo resort) {
         // Serial.print(fetchedDataSnowReport.snowToday);
         // Serial.println(" inches");
         tft.println(fetchedDataSnowReport.name);
-        tft.println(fetchedDataSnowReport.latitude);
-        tft.println(fetchedDataSnowReport.longitude);
-        tft.print("snowToday: ");
+        tft.println("");
+        // tft.print(fetchedDataSnowReport.latitude);
+        // tft.print(", ");
+        // tft.println(fetchedDataSnowReport.longitude);
+        tft.print("Snow today: ");
         tft.print(fetchedDataSnowReport.snowToday);
-        tft.println(" inches");
+        tft.println("\"");
+        tft.println("");
 
 
   float pastWeekSnowAccum = 0;
@@ -257,10 +260,18 @@ void fetchSnowReport(skiResortBasicInfo resort) {
   // Serial.print("pastWeekSnowAccum: ");
   // Serial.print(pastWeekSnowAccum);
   // Serial.println(" inches");
-  tft.println("***");
-  tft.print("pastWeekSnowAccum: ");
+
+  tft.println("Past week's ");
+  tft.print("snowfall: ");
   tft.print(pastWeekSnowAccum);
-  tft.println(" inches");
+  tft.println("\"");
+  tft.println("");
+
+  tft.println("Next week's ");
+  tft.print("snowfall forecast: ");
+  tft.print(nextWeekSnowAccumForecast);
+  tft.println("\"");
+  tft.println("");
 
   // Serial.print("nextWeekSnowAccumForecast: ");
   // Serial.print(nextWeekSnowAccumForecast);
@@ -326,7 +337,7 @@ void setup() {
   };
   Serial.println("");
 
-  fetchSnowReport(vailBasicInfo);
+  // fetchSnowReport(vailBasicInfo);
 
   // for (int i = 0; i < resortsBasicInfoArrCount; i++) {
 
@@ -339,4 +350,20 @@ void setup() {
 
 
 void loop() {
+
+  // fetchSnowReport(vailBasicInfo);
+
+  for (int i = 0; i < resortsBasicInfoArrCount; i++) {
+
+    fetchSnowReport(resortsBasicInfoArr[i]);
+
+    delay(10000);
+
+    tft.fillScreen(TFT_BLACK);
+
+    tft.setTextColor(TFT_WHITE);
+    tft.setCursor(0, 0);
+    tft.setTextSize(2);
+
+  };
 }
